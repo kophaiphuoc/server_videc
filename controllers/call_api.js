@@ -3,7 +3,19 @@ const {getApi,postApi} = require('../API')
 const videc = {
     getListUser:async(req,res)=>{
         try {
-            const respone = await getApi('client-list-temp/VIDEC2023')
+            const respone = await getApi('client-list-temp/VIDEC2023?status=NOTAPPROVED')
+            if(respone.status_code === 200){
+                res.status(200).json(respone.data)
+            }else{
+                res.status(404).json('lỗi hệ thống')
+            }
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    },
+    getListUser2:async(req,res)=>{
+        try {
+            const respone = await getApi('client-list-temp/VIDEC2023?status=ACTIVE&limit=100')
             if(respone.status_code === 200){
                 res.status(200).json(respone.data)
             }else{
